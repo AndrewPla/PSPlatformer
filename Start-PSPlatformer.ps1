@@ -60,9 +60,9 @@ $Script:Player = [PSCustomObject]@{
 
 # FIND PLAYER SPAWN POINT
 For([Int]$R = 0; $R -LT $Script:MapHeight; $R++) {
-    If($Script:LevelData[$R].Contains('@')) {
+    If($Script:LevelData[$R].Contains($Script:Player.Symbol)) {
         $Script:Player.Y = $R
-        $Script:Player.X = $Script:LevelData[$R].IndexOf('@')
+        $Script:Player.X = $Script:LevelData[$R].IndexOf($Script:Player.Symbol)
 
         # REMOVE @ FROM MAP DATA SO WE DON'T COLLIDE WITH OUR SPAWN POINT
         $Script:LevelData[$R] = $Script:LevelData[$R].Replace($script:Player.Symbol, ' ')
@@ -95,7 +95,7 @@ Function Draw-Screen {
     ForEach($L in $Frame) {
         If($L -MATCH 'X') {
             Write-Host $L -ForegroundColor Yellow -NoNewline
-        } ElseIf($L -MATCH '@') { 
+        } ElseIf($L -MATCH $Script:Player.Symbol) { 
             Write-Host $L -ForegroundColor Cyan -NoNewline 
         } Else {
             Write-Host $L -ForegroundColor Gray -NoNewline
